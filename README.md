@@ -1,1 +1,1 @@
-# network-compliants-python-server
+# django-server
