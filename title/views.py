@@ -10,7 +10,8 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, 'index.html')
+    params={'name':'sankhadip samanta','home':'bonai'}
+    return render(request, 'index.html', params)
 
 def removepunc(request):
     return HttpResponse('removepunc')
