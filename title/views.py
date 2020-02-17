@@ -1,22 +1,20 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
-# def index(request):
-#     return HttpResponse('hello')
-
-
-# def about(request):
-#     return HttpResponse('<h1>hello sankha</h1>  <a href="http://www.google.com">harry bhai</a>')
 
 
 def index(request):
     params={'name':'sankhadip samanta','home':'bonai'}
     return render(request, 'index.html', params)
 
-def removepunc(request):
+def analyze(request):
     text=request.GET.get('text','default')
-    print(text)
-    return HttpResponse('removepunc')
+    punc='`~!@#$%^&*()_+=_[]}{\|;:"<>.,'
+    result='';
+    for char in text:
+        if char not in punc:
+            result+=char
+    return HttpResponse(result)
 
 def capitalizefirst(request):
     return HttpResponse('cap first')
