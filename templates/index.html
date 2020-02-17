@@ -5,7 +5,10 @@
     <title>django</title>
 </head>
 <body>
-    <h1>{{ name }}</h1>
-    <p>{{ home }}</p>
+    <h1>Welcome to Text Analyzer</h1>
+    <form action="/removepunc" method="GET">
+        <textarea name="text" style="margin: 0px; width: 721px; height: 93px;"></textarea>
+        <button type="submit">Analyze text</button>
+    </form>
 </body>
 </html>

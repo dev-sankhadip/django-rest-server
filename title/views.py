@@ -14,6 +14,8 @@ def index(request):
     return render(request, 'index.html', params)
 
 def removepunc(request):
+    text=request.GET.get('text','default')
+    print(text)
     return HttpResponse('removepunc')
 
 def capitalizefirst(request):
