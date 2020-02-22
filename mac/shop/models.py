@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
+
+
 
 # Create your models here.
 
@@ -14,3 +17,15 @@ class Products(models.Model):
 
     def __str__(self):
         return self.product_name
+
+
+
+class UserModel(models.Model):
+    userid=models.AutoField
+    username=models.CharField(max_length=50)
+    email=models.CharField(max_length=50)
+    password=models.CharField(max_length=50)
+
+
+class TestModel(models.Model):
+    test=ArrayField(models.CharField(max_length=200), blank=True)
