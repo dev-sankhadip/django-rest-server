@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+import jwt
+from .models import UserModel
 
 
 def index(request):
@@ -53,3 +55,15 @@ def handleLogin(request):
 def handleLogout(request):
     logout(request)
     messages.success(request,"Successfully loggedout")
+
+
+
+def customRegister(request):
+    if request.method=='POST':
+        print(request.body)
+    return HttpResponse("ok");
+
+
+def customLogin(request):
+    print(request.body)
+    return HttpResponse("ok")
