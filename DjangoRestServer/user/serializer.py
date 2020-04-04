@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, generics
 
 from .models import User
 
@@ -34,3 +34,15 @@ class UpdateUser(serializers.ModelSerializer):
         instance.password=validated_data.get('password', instance.password)
         return instance
 
+
+
+class MySerializer(generics.GenericAPIView):
+
+    def get_serializer_class(self):
+        print(self.action)
+        if self.action=='create':
+            return AddUser
+        elif self.action=='update':
+            return UpdateUser
+        else:
+            return RetrieveUsers
