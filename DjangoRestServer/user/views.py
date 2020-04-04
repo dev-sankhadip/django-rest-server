@@ -8,6 +8,8 @@ from .models import User
 
 class AddRetrieveUserView(generics.GenericAPIView):
 
+    """ API view  for both POST and GET request"""
+
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -41,6 +43,8 @@ class AddRetrieveUserView(generics.GenericAPIView):
 
 class UpdateDeleteUserView(generics.RetrieveUpdateDestroyAPIView):
 
+    """ API view for both PUT and DELETE request """
+
     def put(self, request, *args, **kwargs):
         saved_user = get_object_or_404(
             User.objects.all(), pk=request.data['uid'])
@@ -55,8 +59,8 @@ class UpdateDeleteUserView(generics.RetrieveUpdateDestroyAPIView):
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request, *args, **kwargs):
-        saved_user=get_object_or_404(User.objects.all(),pk=request.data['uid'])
+        saved_user = get_object_or_404(
+            User.objects.all(), pk=request.data['uid'])
         saved_user.delete()
         return Response(status=status.HTTP_200_OK)
-
 
