@@ -4,9 +4,6 @@ from django.db import connection
 from .serializer import MySerializer, AddUser, UpdateUser, RetrieveUsers
 
 
-cursor = connection.cursor()
-
-
 class AddRetrieveUserView(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
@@ -17,20 +14,21 @@ class AddRetrieveUserView(generics.GenericAPIView):
             name = serializer.validated_data['name']
             email = serializer.validated_data['email']
             password = serializer.validated_data['password']
-            cursor.execute(
-                f"insert into test values('{uid}', '{name}', '{email}', '{password}')")
-            cursor.close()
-            return Response({
-                "status": 200
-            })
+            with connection.cursor() as c:
+                c.execute(
+                    f"insert into test values('{uid}', '{name}', '{email}', '{password}')")
+                return Response(status=status.HTTP_201_CREATED)
         except Exception as e:
             print(e)
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def get(self, request, *args, **kwargs):
-        return Response({
-            "status": 200
-        })
+        with connection.cursor() as c:
+            c.execute('select * from test')
+            users = c.fetchall()
+            return Response({
+                "users": users
+            })
 
     def get_serializer_class(self):
         if self.request.method == 'POST':
