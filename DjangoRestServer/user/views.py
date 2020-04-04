@@ -1,7 +1,9 @@
 from rest_framework import status, generics
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from django.db import connection
 from .serializer import MySerializer, AddUser, UpdateUser, RetrieveUsers
+from .models import User
 
 
 class AddRetrieveUserView(generics.GenericAPIView):
@@ -40,11 +42,21 @@ class AddRetrieveUserView(generics.GenericAPIView):
 class UpdateDeleteUserView(generics.RetrieveUpdateDestroyAPIView):
 
     def put(self, request, *args, **kwargs):
-        return super().put(request, *args, **kwargs)
+        saved_user = get_object_or_404(
+            User.objects.all(), pk=request.data['uid'])
+        serializer = UpdateUser(instance=saved_user,
+                                data=request.data, partial=True)
+        try:
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def delete(self, request, *args, **kwargs):
-        return super().delete(request, *args, **kwargs)
+        saved_user=get_object_or_404(User.objects.all(),pk=request.data['uid'])
+        saved_user.delete()
+        return Response(status=status.HTTP_200_OK)
 
-    def get_serializer_class(self):
-        if self.request.method == 'PUT':
-            return UpdateUser
+

@@ -32,6 +32,7 @@ class UpdateUser(serializers.ModelSerializer):
         instance.email=validated_data.get('email', instance.email)
         instance.name=validated_data.get('name', instance.name)
         instance.password=validated_data.get('password', instance.password)
+        instance.save()
         return instance
 
 
