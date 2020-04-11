@@ -2,7 +2,7 @@ from rest_framework import status, generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from django.db import connection
-from .serializer import MySerializer, AddUser, UpdateUser, RetrieveUsers
+from .serializer import AddUser, UpdateUser, RetrieveUsers
 from .models import User
 
 
