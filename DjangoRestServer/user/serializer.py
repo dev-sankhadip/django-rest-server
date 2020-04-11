@@ -35,15 +35,3 @@ class UpdateUser(serializers.ModelSerializer):
         instance.save()
         return instance
 
-
-
-class MySerializer(generics.GenericAPIView):
-
-    def get_serializer_class(self):
-        print(self.action)
-        if self.action=='create':
-            return AddUser
-        elif self.action=='update':
-            return UpdateUser
-        else:
-            return RetrieveUsers
